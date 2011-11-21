@@ -1,10 +1,7 @@
 // ==UserScript==
 // @name         Facebook to Google Calendar
 // @namespace    fb2gc
-// @include      https://*.facebook.com/event.php*
-// @include      http://*.facebook.com/event.php*
-// @include      https://facebook.com/event.php*
-// @include      http://facebook.com/event.php*
+// @match        *://*.facebook.com/event.php*
 // @author       Samuel Gaus
 // @description  This userscript adds a button to a Facebook event that extracts the relevant data and produces a Google Calendar event.
 // ==/UserScript==
