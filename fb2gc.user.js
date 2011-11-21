@@ -36,10 +36,7 @@ function main() {
 			return $(element).text()
 		}
 	).join(", ");
-
-// We can't use a description because it ends up being too long, resulting in a 414 error. If you can POST one way, we can sort this out.
-
-	//var description = $("div.description").text();
+	var description = $("div.description").clone().find("span.text_exposed_hide").remove().end().text();
 
 	// Times needs to be yyyymmddThhmmssZ
 	var dash = new RegExp("-", "g");
@@ -50,18 +47,29 @@ function main() {
 // Generate the Google Calendar template link
 
 	var href  = "http://www.google.com/calendar/event?action=TEMPLATE&text=";
-	href += encodeURI(title);
+	href += escape(title);
 	href += "&dates=";
 	// todo: needs some way of handling all-day events
 	href += start;
 	href += "/";
 	href += end;
-	// Missing out description because of 414 errors
-	//href += "&details=";
-	//href += encodeURI(description);
 	href += "&location=";
-	href += encodeURI(place+", "+address);
+	href += escape(place+", "+address);
 	href += "&trp=true";
+
+	// Include the right amount of description ensuring href is no longer than 1900 characters. Sometimes Google adds some additional parameters, so we'll keep it at 1900 - it seems to work for me.
+	var cutoff = 1900-href.length;
+	cutoff -= 12; //&details= and ...
+	if(cutoff > 0){
+		var details = location.href+": "+description;
+		details = details.substring(0,cutoff);
+		//length will expand when encoded; little loop here to compensate for that
+		while(escape(details).length>cutoff){
+			details = details.substring(0,details.length-1);
+		}
+		details = "&details="+escape(details)+"...";
+		href += details;
+	}
 
 // Now we need to make a Send to Google Calendar link
 
