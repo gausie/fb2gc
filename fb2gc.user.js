@@ -68,7 +68,7 @@ function main() {
 
 // Now we need to make a Send to Google Calendar link
 
-	$('div.profileHeaderMain div.fsm').append(" · <span class='fsl'><a rel='dialog' target='_blank' href='"+href+"'>Google Calendar</a></span>");
+	$('div.profileHeaderMain div.fsm').append(" · <span class='fsl'><a target='_blank' href='"+href+"'>Google Calendar</a></span>");
 
 }
 
