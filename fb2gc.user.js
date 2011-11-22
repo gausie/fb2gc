@@ -39,17 +39,15 @@ function main() {
 	var description = $("div.description").clone().find("span.text_exposed_hide").remove().end().text();
 
 	// Times needs to be yyyymmddThhmmssZ
-	var dash = new RegExp("-", "g");
-	var colon = new RegExp(":", "g");
-	start = start.replace(dash, "").replace(colon, "")+'Z';
-	end = end.replace(dash, "").replace(colon, "")+'Z';
+	var regexp = new RegExp("[-|:]", "g");
+	start = start.replace(regexp, "")+'Z';
+	end = end.replace(regexp, "")+'Z';
 
 // Generate the Google Calendar template link
 
 	var href  = "http://www.google.com/calendar/event?action=TEMPLATE&text=";
 	href += escape(title);
 	href += "&dates=";
-	// todo: needs some way of handling all-day events
 	href += start;
 	href += "/";
 	href += end;
